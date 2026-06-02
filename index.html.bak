@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Short Answer Grading | Nigerian Tertiary Institutions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="header-content">
+                <h1>📝 LLM Short Answer Grading System</h1>
+                <p class="subtitle">Robust to Nigerian English Variations | Zero-Cost Deployment</p>
+                <div class="badges">
+                    <span class="badge">🇳🇬 Supports Nigerian English</span>
+                    <span class="badge">⚡ Free Tier Deployment</span>
+                    <span class="badge">✏️ Lecturer Override</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="create">📋 Create Job</button>
+            <button class="tab-btn" data-tab="grade">🚀 Grade Answers</button>
+            <button class="tab-btn" data-tab="review">✏️ Review & Override</button>
+            <button class="tab-btn" data-tab="evaluate">📊 Evaluate (RQ1-RQ2)</button>
+            <button class="tab-btn" data-tab="jobs">📁 My Jobs</button>
+        </div>
+
+        <div id="create-tab" class="tab-content active">
+            <div class="card">
+                <h2>Step 1: Create Grading Job</h2>
+                <div class="form-group">
+                    <label>Job Name</label>
+                    <input type="text" id="job-name" placeholder="e.g., CIT 101 - Computer Components Quiz" class="input">
+                </div>
+                <div class="form-group">
+                    <label>Question Text</label>
+                    <textarea id="question-text" rows="3" class="textarea" placeholder="Enter the question students were asked..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Reference Answer (Rubric)</label>
+                    <textarea id="ref-answer" rows="3" class="textarea" placeholder="Enter the ideal/correct answer..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Maximum Score</label>
+                    <input type="number" id="max-score" value="100" class="input" style="width: 150px;">
+                </div>
+                <button id="create-job-btn" class="btn btn-primary">Create Job</button>
+                <div id="create-result" class="result-message"></div>
+            </div>
+        </div>
+
+        <div id="grade-tab" class="tab-content">
+            <div class="card">
+                <h2>Step 2: Upload & Grade Student Answers</h2>
+                <div class="form-group">
+                    <label>Select Job</label>
+                    <select id="grade-job-select" class="input"></select>
+                </div>
+                <div class="form-group">
+                    <label>Upload CSV File</label>
+                    <input type="file" id="answer-file" accept=".csv" class="input">
+                    <small>CSV format: student_id,answer (or any column with "answer" in the name)</small>
+                </div>
+                <div class="button-group">
+                    <button id="upload-btn" class="btn btn-secondary">📤 Upload Answers</button>
+                    <button id="start-grading-btn" class="btn btn-primary">🚀 Start Grading</button>
+                </div>
+                <div id="grading-progress" class="progress-container" style="display: none;">
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                    <p id="progress-text">Processing...</p>
+                </div>
+                <div id="grade-result" class="result-message"></div>
+            </div>
+            
+            <div class="card">
+                <h3>📥 Sample CSV Format</h3>
+                <pre class="code-sample">
+student_id,answer
+CIT001,The CPU is the brain of the computer.
+CIT002,CPU dey process all the instructions wey computer need.</pre>
+                <button id="download-sample-csv" class="btn btn-secondary btn-sm">Download Sample CSV</button>
+            </div>
+        </div>
+
+        <div id="review-tab" class="tab-content">
+            <div class="card">
+                <h2>Step 3: Review and Adjust Grades</h2>
+                <div class="form-group">
+                    <label>Select Job</label>
+                    <select id="review-job-select" class="input"></select>
+                    <button id="load-results-btn" class="btn btn-secondary" style="margin-top: 10px;">📊 Load Results</button>
+                </div>
+                <div id="results-table-container" style="overflow-x: auto;">
+                    <table id="results-table" class="results-table">
+                        <thead>
+                            <tr><th>Student ID</th><th>Answer</th><th>Model Score</th><th>Nigerian Variation?</th><th>Override Score</th><th>Final Score</th><th>Action</th></tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="button-group" style="margin-top: 20px;">
+                    <button id="export-btn" class="btn btn-success">📎 Export as CSV</button>
+                    <button id="batch-override-btn" class="btn btn-warning">✏️ Batch Override (Add +5 to all variations)</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="evaluate-tab" class="tab-content">
+            <div class="card">
+                <h2>📊 Research Questions Evaluation</h2>
+                <p class="info-text">This section evaluates your system against RQ1 and RQ2 using Quadratic Weighted Kappa (QWK).</p>
+                
+                <div class="form-group">
+                    <label>Select Completed Job for Evaluation</label>
+                    <select id="eval-job-select" class="input"></select>
+                    <button id="run-evaluation-btn" class="btn btn-primary" style="margin-top: 10px;">🔬 Run Evaluation</button>
+                </div>
+                
+                <div id="evaluation-results" class="evaluation-results" style="display: none;">
+                    <div class="result-card">
+                        <h4>RQ1: Accuracy on Nigerian English Variations</h4>
+                        <div class="metric-row">
+                            <div class="metric">
+                                <span class="metric-label">Quadratic Weighted Kappa (QWK)</span>
+                                <span class="metric-value" id="eval-qwk-all">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">RMSE</span>
+                                <span class="metric-value" id="eval-rmse-all">-</span>
+                            </div>
+                        </div>
+                        <p id="rq1-interpretation" class="interpretation"></p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>RQ2: Standard English vs Nigerian Variations</h4>
+                        <div class="metric-row">
+                            <div class="metric">
+                                <span class="metric-label">Standard English QWK</span>
+                                <span class="metric-value" id="eval-qwk-standard">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Nigerian Variations QWK</span>
+                                <span class="metric-value" id="eval-qwk-variation">-</span>
+                            </div>
+                        </div>
+                        <p id="rq2-interpretation" class="interpretation"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="jobs-tab" class="tab-content">
+            <div class="card">
+                <h2>Your Grading Jobs</h2>
+                <div id="jobs-list"></div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
