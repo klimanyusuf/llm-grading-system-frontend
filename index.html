@@ -11,22 +11,22 @@
     <div class="app-container">
         <header class="header">
             <div class="header-content">
-                <h1>?? LLM Short Answer Grading System</h1>
+                <h1>📝 LLM Short Answer Grading System</h1>
                 <p class="subtitle">Robust to Nigerian English Variations | Zero-Cost Deployment</p>
                 <div class="badges">
-                    <span class="badge">???? Supports Nigerian English</span>
-                    <span class="badge">? Free Tier Deployment</span>
-                    <span class="badge">?? Lecturer Override</span>
+                    <span class="badge">🇳🇬 Supports Nigerian English</span>
+                    <span class="badge">⚡ Free Tier Deployment</span>
+                    <span class="badge">✏️ Lecturer Override</span>
                 </div>
             </div>
         </header>
 
         <div class="tabs">
-            <button class="tab-btn active" data-tab="create">?? Create Job</button>
-            <button class="tab-btn" data-tab="grade">?? Grade Answers</button>
-            <button class="tab-btn" data-tab="review">?? Review & Override</button>
-            <button class="tab-btn" data-tab="evaluate">?? Evaluate (RQ1-RQ2)</button>
-            <button class="tab-btn" data-tab="jobs">?? My Jobs</button>
+            <button class="tab-btn active" data-tab="create">📋 Create Job</button>
+            <button class="tab-btn" data-tab="grade">🚀 Grade Answers</button>
+            <button class="tab-btn" data-tab="review">✏️ Review & Override</button>
+            <button class="tab-btn" data-tab="evaluate">📊 Evaluate (RQ1-RQ2)</button>
+            <button class="tab-btn" data-tab="jobs">📁 My Jobs</button>
         </div>
 
         <div id="create-tab" class="tab-content active">
@@ -66,8 +66,8 @@
                     <small>CSV format: student_id,answer (or any column with "answer" in the name)</small>
                 </div>
                 <div class="button-group">
-                    <button id="upload-btn" class="btn btn-secondary">?? Upload Answers</button>
-                    <button id="start-grading-btn" class="btn btn-primary">?? Start Grading</button>
+                    <button id="upload-btn" class="btn btn-secondary">📤 Upload Answers</button>
+                    <button id="start-grading-btn" class="btn btn-primary">🚀 Start Grading</button>
                 </div>
                 <div id="grading-progress" class="progress-container" style="display: none;">
                     <div class="progress-bar">
@@ -79,7 +79,7 @@
             </div>
             
             <div class="card">
-                <h3>?? Sample CSV Format</h3>
+                <h3>📥 Sample CSV Format</h3>
                 <pre class="code-sample">
 student_id,answer
 CIT001,The CPU is the brain of the computer.
@@ -94,32 +94,40 @@ CIT002,CPU dey process all the instructions wey computer need.</pre>
                 <div class="form-group">
                     <label>Select Job</label>
                     <select id="review-job-select" class="input"></select>
-                    <button id="load-results-btn" class="btn btn-secondary" style="margin-top: 10px;">?? Load Results</button>
+                    <button id="load-results-btn" class="btn btn-secondary" style="margin-top: 10px;">📊 Load Results</button>
                 </div>
                 <div id="results-table-container" style="overflow-x: auto;">
                     <table id="results-table" class="results-table">
                         <thead>
-                            <tr><th>Student ID</th><th>Answer</th><th>Model Score</th><th>Nigerian Variation?</th><th>Override Score</th><th>Final Score</th><th>Action</th></tr>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Answer</th>
+                                <th>Model Score</th>
+                                <th>Nigerian Variation?</th>
+                                <th>Override Score</th>
+                                <th>Final Score</th>
+                                <th>Action</th>
+                            </tr>
                         </thead>
                         <tbody></tbody>
                     </table>
                 </div>
                 <div class="button-group" style="margin-top: 20px;">
-                    <button id="export-btn" class="btn btn-success">?? Export as CSV</button>
-                    <button id="batch-override-btn" class="btn btn-warning">?? Batch Override (Add +5 to all variations)</button>
+                    <button id="export-btn" class="btn btn-success">📎 Export as CSV</button>
+                    <button id="batch-override-btn" class="btn btn-warning">✏️ Batch Override (Add +5 to all variations)</button>
                 </div>
             </div>
         </div>
 
         <div id="evaluate-tab" class="tab-content">
             <div class="card">
-                <h2>?? Research Questions Evaluation</h2>
+                <h2>📊 Research Questions Evaluation</h2>
                 <p class="info-text">This section evaluates your system against RQ1 and RQ2 using Quadratic Weighted Kappa (QWK).</p>
                 
                 <div class="form-group">
                     <label>Select Completed Job for Evaluation</label>
                     <select id="eval-job-select" class="input"></select>
-                    <button id="run-evaluation-btn" class="btn btn-primary" style="margin-top: 10px;">?? Run Evaluation</button>
+                    <button id="run-evaluation-btn" class="btn btn-primary" style="margin-top: 10px;">🔬 Run Evaluation</button>
                 </div>
                 
                 <div id="evaluation-results" class="evaluation-results" style="display: none;">
@@ -131,7 +139,7 @@ CIT002,CPU dey process all the instructions wey computer need.</pre>
                                 <span class="metric-value" id="eval-qwk-all">-</span>
                             </div>
                             <div class="metric">
-                                <span class="metric-label">RMSE</span>
+                                <span class="metric-label">Root Mean Square Error (RMSE)</span>
                                 <span class="metric-value" id="eval-rmse-all">-</span>
                             </div>
                         </div>
@@ -163,6 +171,7 @@ CIT002,CPU dey process all the instructions wey computer need.</pre>
             </div>
         </div>
     </div>
+    
     <script src="app.js"></script>
 </body>
 </html>
