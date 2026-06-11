@@ -1,4 +1,4 @@
-﻿const API_BASE = 'http://localhost:8000';
+const API_BASE = 'https://klimanyusuf-llm-grading-system.hf.space';
 let currentJobId = null;
 let pollingInterval = null;
 
@@ -64,7 +64,7 @@ document.getElementById('create-job-btn').addEventListener('click', async () => 
             })
         });
         const job = await res.json();
-        showMessage('create-result', `✅ Job created! ID: ${job.id}`, 'success');
+        showMessage('create-result', `? Job created! ID: ${job.id}`, 'success');
         document.getElementById('job-name').value = '';
         document.getElementById('question-text').value = '';
         document.getElementById('ref-answer').value = '';
@@ -100,7 +100,7 @@ document.getElementById('upload-btn').addEventListener('click', async () => {
         const result = await res.json();
         
         if (res.ok && result.total > 0) {
-            showMessage('grade-result', `✅ Uploaded ${result.total} answers!`, 'success');
+            showMessage('grade-result', `? Uploaded ${result.total} answers!`, 'success');
             // Refresh the job dropdowns
             await loadJobsForSelect('grade-job-select');
             await loadJobsForSelect('review-job-select');
@@ -166,7 +166,7 @@ document.getElementById('start-grading-btn').addEventListener('click', async () 
                     if (job.status === 'completed') {
                         clearInterval(pollingInterval);
                         progressDiv.style.display = 'none';
-                        showMessage('grade-result', '✅ Grading completed! Go to Review tab.', 'success');
+                        showMessage('grade-result', '? Grading completed! Go to Review tab.', 'success');
                         loadJobsForSelect('review-job-select');
                     }
                 }
@@ -230,7 +230,7 @@ document.getElementById('load-results-btn').addEventListener('click', async () =
                 body: JSON.stringify({ answer_id: a.id, override_score: newScore })
             });
             row.cells[5].textContent = newScore;
-            alert('✅ Grade updated');
+            alert('? Grade updated');
         };
         actionCell.appendChild(btn);
     });
@@ -260,7 +260,7 @@ document.getElementById('batch-override-btn').addEventListener('click', async ()
             count++;
         }
     }
-    alert(`✅ Updated ${count} answers (+5 points)`);
+    alert(`? Updated ${count} answers (+5 points)`);
     document.getElementById('load-results-btn').click();
 });
 
@@ -301,7 +301,7 @@ async function loadJobs() {
         jobs.forEach(job => {
             const div = document.createElement('div');
             div.className = 'job-item';
-            div.innerHTML = `<div><strong>${job.job_name}</strong><br><small>ID: ${job.id}</small></div><div><span class="job-status status-${job.status}">${job.status}</span> 📊 ${job.processed_answers}/${job.total_answers}</div>`;
+            div.innerHTML = `<div><strong>${job.job_name}</strong><br><small>ID: ${job.id}</small></div><div><span class="job-status status-${job.status}">${job.status}</span> ?? ${job.processed_answers}/${job.total_answers}</div>`;
             container.appendChild(div);
         });
     } catch(e) { console.error(e); }
@@ -311,7 +311,7 @@ async function loadJobs() {
 loadJobsForSelect('grade-job-select');
 loadJobsForSelect('review-job-select');
 loadJobsForSelect('eval-job-select');
-console.log('✅ UI Ready - Upload should work now');
+console.log('? UI Ready - Upload should work now');
 
 // ============================================
 // FIXED UPLOAD FUNCTION - Added on $(Get-Date)
@@ -354,7 +354,7 @@ console.log('✅ UI Ready - Upload should work now');
         formData.append('file', file);
         
         try {
-            const response = await fetch(`http://localhost:8000/api/jobs/${jobId}/upload`, {
+            const response = await fetch(`https://klimanyusuf-llm-grading-system.hf.space/api/jobs/${jobId}/upload`, {
                 method: 'POST',
                 body: formData
             });
@@ -363,7 +363,7 @@ console.log('✅ UI Ready - Upload should work now');
             console.log('Upload response:', result);
             
             if (response.ok && result.total > 0) {
-                alert(`✅ Uploaded ${result.total} answers! Now click Start Grading.`);
+                alert(`? Uploaded ${result.total} answers! Now click Start Grading.`);
                 // Refresh the page to show updated job status
                 location.reload();
             } else {
@@ -375,7 +375,7 @@ console.log('✅ UI Ready - Upload should work now');
         }
     });
     
-    console.log('✅ Upload button fixed. Now try uploading again.');
+    console.log('? Upload button fixed. Now try uploading again.');
 })();
 
 // ============================================
@@ -422,7 +422,7 @@ console.log('✅ UI Ready - Upload should work now');
             formData.append('file', file);
             
             try {
-                const response = await fetch(`http://localhost:8000/api/jobs/${jobId}/upload`, {
+                const response = await fetch(`https://klimanyusuf-llm-grading-system.hf.space/api/jobs/${jobId}/upload`, {
                     method: 'POST',
                     body: formData
                 });
@@ -431,7 +431,7 @@ console.log('✅ UI Ready - Upload should work now');
                 console.log('Upload response:', result);
                 
                 if (response.ok && result.total > 0) {
-                    alert(`✅ Uploaded ${result.total} answers! The page will now refresh.`);
+                    alert(`? Uploaded ${result.total} answers! The page will now refresh.`);
                     // Force refresh to show updated job
                     window.location.reload();
                 } else {
@@ -443,7 +443,7 @@ console.log('✅ UI Ready - Upload should work now');
             }
         });
         
-        console.log('✅ Permanent upload fix applied');
+        console.log('? Permanent upload fix applied');
     }, 500);
 })();
 // ===== FIXED UPLOAD BUTTON HANDLER =====
@@ -487,7 +487,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('file', file);
         
         try {
-            const response = await fetch(`http://localhost:8000/api/jobs/${jobId}/upload`, {
+            const response = await fetch(`https://klimanyusuf-llm-grading-system.hf.space/api/jobs/${jobId}/upload`, {
                 method: 'POST',
                 body: formData
             });
@@ -495,7 +495,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const result = await response.json();
             
             if (response.ok && result.total > 0) {
-                alert(`✅ Uploaded ${result.total} answers!`);
+                alert(`? Uploaded ${result.total} answers!`);
                 // Refresh the page to show updated job
                 window.location.reload();
             } else {
@@ -507,7 +507,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    console.log('✅ Upload button fixed');
+    console.log('? Upload button fixed');
 });
 
 // ===== FIXED EVALUATION FUNCTION =====
@@ -538,7 +538,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Evaluating job:', jobId);
         
         try {
-            const response = await fetch(`http://localhost:8000/api/evaluate/${jobId}`);
+            const response = await fetch(`https://klimanyusuf-llm-grading-system.hf.space/api/evaluate/${jobId}`);
             
             if (!response.ok) {
                 const error = await response.json();
@@ -564,11 +564,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 const rq1El = document.getElementById('rq1-interpretation');
                 if (rq1El) {
                     if (qwkAll >= 0.70) {
-                        rq1El.innerHTML = '<strong>✓ RQ1 Answer:</strong> Model achieves substantial agreement (QWK ≥ 0.70) on Nigerian English variations.';
+                        rq1El.innerHTML = '<strong>? RQ1 Answer:</strong> Model achieves substantial agreement (QWK = 0.70) on Nigerian English variations.';
                     } else if (qwkAll >= 0.50) {
-                        rq1El.innerHTML = '<strong>⚠️ RQ1 Answer:</strong> Model achieves moderate agreement (QWK between 0.50-0.70).';
+                        rq1El.innerHTML = '<strong>?? RQ1 Answer:</strong> Model achieves moderate agreement (QWK between 0.50-0.70).';
                     } else {
-                        rq1El.innerHTML = '<strong>❌ RQ1 Answer:</strong> Model shows low agreement. Consider more fine-tuning.';
+                        rq1El.innerHTML = '<strong>? RQ1 Answer:</strong> Model shows low agreement. Consider more fine-tuning.';
                     }
                 }
                 
@@ -577,16 +577,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 const rq2El = document.getElementById('rq2-interpretation');
                 if (rq2El) {
                     if (Math.abs(qwkStandard - qwkVariation) < 0.1) {
-                        rq2El.innerHTML = '<strong>✓ RQ2 Answer:</strong> Model performs equally well on both standard English and Nigerian variations.';
+                        rq2El.innerHTML = '<strong>? RQ2 Answer:</strong> Model performs equally well on both standard English and Nigerian variations.';
                     } else if (qwkVariation < qwkStandard) {
-                        rq2El.innerHTML = `<strong>⚠️ RQ2 Answer:</strong> Model performs better on standard English (${qwkStandard.toFixed(3)}) than Nigerian variations (${qwkVariation.toFixed(3)}).`;
+                        rq2El.innerHTML = `<strong>?? RQ2 Answer:</strong> Model performs better on standard English (${qwkStandard.toFixed(3)}) than Nigerian variations (${qwkVariation.toFixed(3)}).`;
                     } else {
-                        rq2El.innerHTML = `<strong>✓ RQ2 Answer:</strong> Model performs better on Nigerian variations (${qwkVariation.toFixed(3)}).`;
+                        rq2El.innerHTML = `<strong>? RQ2 Answer:</strong> Model performs better on Nigerian variations (${qwkVariation.toFixed(3)}).`;
                     }
                 }
             }
             
-            alert('✅ Evaluation complete! Check the results below.');
+            alert('? Evaluation complete! Check the results below.');
             
         } catch (error) {
             console.error('Evaluation error:', error);
@@ -594,5 +594,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    console.log('✅ Evaluation button fixed');
+    console.log('? Evaluation button fixed');
 })();
